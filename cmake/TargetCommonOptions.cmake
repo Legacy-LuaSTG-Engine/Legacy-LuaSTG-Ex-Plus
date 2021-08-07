@@ -9,7 +9,7 @@ function(luastg_target_common_options __TARGET__)
         )
     endif()
     set_target_properties(${__TARGET__} PROPERTIES
-        C_STANDARD 17
+        C_STANDARD 11
         C_STANDARD_REQUIRED ON
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
