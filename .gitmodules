@@ -1,3 +1,9 @@
 [submodule "xmath/xmath"]
 	path = xmath/xmath
 	url = https://github.com/Xrysnow/lstgx_Math.git
+[submodule "lualib/cjson"]
+	path = lualib/cjson
+	url = https://github.com/mpx/lua-cjson.git
+[submodule "lualib/lfs"]
+	path = lualib/lfs
+	url = https://github.com/keplerproject/luafilesystem.git
