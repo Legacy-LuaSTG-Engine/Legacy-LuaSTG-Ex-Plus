@@ -109,4 +109,8 @@ target_link_libraries(fancy2d PUBLIC
     ogg
     vorbis
     vorbisfile
+    winmm.lib
+    Imm32.lib
+    dxguid.lib
+    Strmiids.lib
 )
