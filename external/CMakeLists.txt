@@ -15,3 +15,18 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
 else()
     message(FATAL_ERROR "unknown platform")
 endif()
+
+add_library(zip SHARED IMPORTED GLOBAL)
+target_include_directories(zip INTERFACE
+    include
+)
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    message(FATAL_ERROR "unknown platform")
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    set_target_properties(zip PROPERTIES
+        IMPORTED_IMPLIB   ${CMAKE_CURRENT_LIST_DIR}/lib/zip.lib
+        IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/bin/zip.dll
+    )
+else()
+    message(FATAL_ERROR "unknown platform")
+endif()
