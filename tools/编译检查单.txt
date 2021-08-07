@@ -1,0 +1,6 @@
+1、检查exe的图标和启动加载图
+2、检查exe信息是否正确（resource.h、LuaSTGPlus.rc）
+3、检查加密的密码是否正确
+4、检查log文件的位置、公司名、产品名
+5、检查steam API、steam app ID
+6、检查游戏各项特性，比如碰撞体缩放、launch文件、是否开启入口点加密等
