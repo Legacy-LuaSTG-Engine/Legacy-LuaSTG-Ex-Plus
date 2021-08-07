@@ -1372,8 +1372,8 @@ bool AppFrame::Init()LNOEXCEPT
 		lua_register_custom_loader(L); // 加强版 package 库 (require)
 		//luaopen_steam(L); // Steam API
 
-		//luaopen_lfs(L);  // 文件系统库 (file system)
-		//luaopen_cjson(L);  // CJSON库 (json)
+		luaopen_lfs(L);  // 文件系统库 (file system)
+		luaopen_cjson(L);  // CJSON库 (json)
 		lua_settop(L, 0);// 不知道为什么弄了6个table在栈顶……
 
 		if (!SafeCallScript(LuaInternalSource_1().c_str(), LuaInternalSource_1().length(), "internal")) {

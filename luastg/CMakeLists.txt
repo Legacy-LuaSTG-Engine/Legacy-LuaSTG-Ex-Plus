@@ -106,5 +106,6 @@ target_link_libraries(LuaSTGPlus PRIVATE
     fancy2d
     xmath
     luajit
+    lualib
     Gdiplus.lib
 )
