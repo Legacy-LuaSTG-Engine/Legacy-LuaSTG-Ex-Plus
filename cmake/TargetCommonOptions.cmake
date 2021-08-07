@@ -14,4 +14,8 @@ function(luastg_target_common_options __TARGET__)
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
     )
+    target_compile_definitions(${__TARGET__} PRIVATE
+        _UNICODE
+        UNICODE
+    )
 endfunction()

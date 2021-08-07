@@ -6,11 +6,14 @@
 #pragma once
 
 // 导出函数定义
-#ifdef F2DEXPORT
-#define F2DDLLFUNC __declspec(dllexport)
+#ifdef F2DDLL
+	#ifdef F2DEXPORT
+		#define F2DDLLFUNC __declspec(dllexport)
+	#else
+		#define F2DDLLFUNC __declspec(dllimport)
+	#endif
 #else
-/// @brief F2DDLL导入函数
-#define F2DDLLFUNC __declspec(dllimport)
+	#define F2DDLLFUNC
 #endif
 
 #include "f2dEngine.h"
