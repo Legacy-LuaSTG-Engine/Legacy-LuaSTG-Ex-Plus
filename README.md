@@ -8,6 +8,10 @@ This is a continued maintenance version of the [LuaSTG Ex Plus](https://github.c
 
 这是一个[LuaSTG Ex Plus](https://github.com/Xiliusha/LuaSTG-EX-Plus)（曾经由@Xiliusha维护）的继续维护版本。我们与时俱进，通过CMake管理项目。
 
+Even this, we recommend that you use [LuaSTG x](https://github.com/Xrysnow/LuaSTG-x) branch.
+
+即使如此，我们也推荐您使用[LuaSTG x](https://github.com/Xrysnow/LuaSTG-x)。
+
 ## Build 构建
 
 1. clone repository 拉取仓库到本地
