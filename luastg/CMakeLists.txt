@@ -109,3 +109,14 @@ target_link_libraries(LuaSTGPlus PRIVATE
     lualib
     Gdiplus.lib
 )
+
+luastg_target_copy_to_output_directory(LuaSTGPlus LuaSTGPlus)
+luastg_target_copy_to_output_directory(LuaSTGPlus luajit)
+luastg_target_copy_to_output_directory(LuaSTGPlus zlib)
+luastg_target_copy_to_output_directory(LuaSTGPlus zip)
+luastg_target_copy_to_output_directory(LuaSTGPlus ogg)
+luastg_target_copy_to_output_directory(LuaSTGPlus vorbis)
+luastg_target_copy_to_output_directory(LuaSTGPlus vorbisfile)
+luastg_target_copy_to_output_directory(LuaSTGPlus freetype)
+luastg_target_copy_to_output_directory(LuaSTGPlus DXSDK_D3DX9)
+luastg_target_copy_to_output_directory(LuaSTGPlus DXSDK_D3DXCompiler)
