@@ -1,5 +1,8 @@
 add_executable(LuaSTGPlus WIN32)
 luastg_target_common_options(LuaSTGPlus)
+target_compile_definitions(LuaSTGPlus PRIVATE
+    ____LDEVVERSION
+)
 target_include_directories(LuaSTGPlus PRIVATE
     .
     LuaWrapper
