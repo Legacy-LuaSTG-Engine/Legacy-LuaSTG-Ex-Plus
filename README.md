@@ -4,9 +4,9 @@
 
 This is an archive of [LuaSTG Ex Plus](https://github.com/Xiliusha/LuaSTG-EX-Plus) (used to be maintained by @Xiliusha), no new features are being developed, only critical bug fixes. We upgrade the working flow, using CMake to manage the project.
 
-The life cycle of LuaSTG Ex Plus has ended, we recommend you to use:
-* [LuaSTG x](https://github.com/Xrysnow/LuaSTG-x)
-* [LuaSTG Sub](https://github.com/Legacy-LuaSTG-Engine/LuaSTG-Sub)
+The life cycle of LuaSTG Ex Plus has ended, we recommend you:
+* If you are using LuaSTG Plus, please consider migrating to [LuaSTG Plus V2](https://github.com/9chu/LuaSTGPlus)
+* If you are using LuaSTG Ex Plus, please consider migrating to [LuaSTG Sub](https://github.com/Legacy-LuaSTG-Engine/LuaSTG-Sub)
 
 ## Build
 
@@ -33,9 +33,9 @@ cmake --build build --config Release
 
 这是一个[LuaSTG Ex Plus](https://github.com/Xiliusha/LuaSTG-EX-Plus)（曾经由@Xiliusha维护）的存档，不再开发新功能，仅修复重要 bug。我们与时俱进，通过CMake管理项目。
 
-LuaSTG Ex Plus 的生命周期已经结束，我们推荐您使用：
-* [LuaSTG x](https://github.com/Xrysnow/LuaSTG-x)
-* [LuaSTG Sub](https://github.com/Legacy-LuaSTG-Engine/LuaSTG-Sub)
+LuaSTG Ex Plus 的生命周期已经结束，我们推荐您：
+* 如果正在使用 LuaSTG Plus，请考虑迁移到 [LuaSTG Plus V2](https://github.com/9chu/LuaSTGPlus)
+* 如果正在使用 LuaSTG Ex Plus，请考虑迁移到 [LuaSTG Sub](https://github.com/Legacy-LuaSTG-Engine/LuaSTG-Sub)
 
 ## 构建
 
