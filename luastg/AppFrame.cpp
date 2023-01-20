@@ -1402,6 +1402,19 @@ bool AppFrame::Init()LNOEXCEPT
 	regex tDebuggerPattern("\\/debugger:(\\d+)");
 	lua_getglobal(L, "lstg");  // t
 	lua_newtable(L);  // t t
+	LPWSTR cmd_line = GetCommandLineW();
+	int argc = 0;
+	if (LPWSTR* wargv = CommandLineToArgvW(cmd_line, &argc))
+	{
+		for (int i = 0; i < argc; i += 1)
+		{
+			auto argv_u8 = fcyStringHelper::WideCharToMultiByte(wargv[i], CP_UTF8);
+			lua_pushinteger(L, i + 1);  // t t i
+			lua_pushstring(L, argv_u8.c_str());  // t t i s
+			lua_settable(L, -3);  // t t
+		}
+		LocalFree(wargv);
+	}
 	for (int i = 0, c = 1; i < __argc; ++i)
 	{
 		cmatch tMatch;
@@ -1429,9 +1442,6 @@ bool AppFrame::Init()LNOEXCEPT
 			// 不将debugger项传入用户命令行参数中
 			continue;
 		}
-		lua_pushinteger(L, c++);  // t t i
-		lua_pushstring(L, __argv[i]);  // t t i s
-		lua_settable(L, -3);  // t t
 	}
 	lua_setfield(L, -2, "args");  // t
 	lua_pop(L, 1);
