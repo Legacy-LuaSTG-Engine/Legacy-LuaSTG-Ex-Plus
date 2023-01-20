@@ -280,6 +280,7 @@ void Archive::ListFile() {
 
 struct FileManager::Impl {
 	set<Archive*, Archive::ArchiveSort> ArchiveSet;
+	std::vector<std::string> m_search_path_list;
 };
 
 FileManager::FileManager() {
@@ -452,6 +453,21 @@ fcyStream* FileManager::LoadFile(const char* filepath) {
 				return stream;
 			}
 		}
+		else {
+			std::string new_path;
+			for (auto const& search_path : m_Impl->m_search_path_list)
+			{
+				new_path.clear();
+				new_path.append(search_path);
+				new_path.append(filepath);
+				if (zip->FileExist(new_path.c_str())) {
+					fcyStream* stream = zip->LoadFile(new_path.c_str());
+					if (stream != nullptr) {
+						return stream;
+					}
+				}
+			}
+		}
 	}
 
 	/*//从文件系统查找
@@ -473,39 +489,58 @@ fcyStream* FileManager::LoadFile(const char* filepath) {
 	return ss;
 	//*/
 	//*
-	fstream f;
-	string ansipath = Eyes2D::String::UTF8ToANSI(string(filepath));
-	f.open(ansipath, ios::in | ios::binary);
-	if (!f.is_open()) {
-		return nullptr;
-	}
-	else {
-		//警告：潜在的溢出错误，寻址返回的为long long，但是size_t为unsigned int
-		f.seekg(0, ios::beg);
-		size_t pos1 = (size_t)f.tellg();
-		f.seekg(0, ios::end);
-		size_t pos2 = (size_t)f.tellg();
-		size_t buffersize = pos2 - pos1;
-		
-		fcyMemStream* stream = new fcyMemStream(nullptr, 0, true, true);
-		stream->SetLength((fLen)buffersize);
-		stream->SetPosition(FCYSEEKORIGIN_BEG, 0);
-
-		f.seekg(0, ios::beg);
-		f.read((char*)(stream->GetInternalBuffer()), buffersize);
-
-		pos2 = (size_t)f.tellg();
-		size_t buffersize2 = pos2 - pos1;
-
-		f.close();
-
-		if (buffersize != buffersize2) {
-			stream->Release();//先释放
+	auto wpath = Eyes2D::String::UTF8ToUTF16(filepath);
+	auto loadFile = [](std::wstring const& p) -> fcyStream* {
+		ifstream f;
+		f.open(p, ios::in | ios::binary);
+		if (!f.is_open()) {
 			return nullptr;
 		}
 		else {
-			return (fcyStream*)stream;
+			//警告：潜在的溢出错误，寻址返回的为long long，但是size_t为unsigned int
+			f.seekg(0, ios::beg);
+			size_t pos1 = (size_t)f.tellg();
+			f.seekg(0, ios::end);
+			size_t pos2 = (size_t)f.tellg();
+			size_t buffersize = pos2 - pos1;
+			
+			fcyMemStream* stream = new fcyMemStream(nullptr, 0, true, true);
+			stream->SetLength((fLen)buffersize);
+			stream->SetPosition(FCYSEEKORIGIN_BEG, 0);
+
+			f.seekg(0, ios::beg);
+			f.read((char*)(stream->GetInternalBuffer()), buffersize);
+
+			pos2 = (size_t)f.tellg();
+			size_t buffersize2 = pos2 - pos1;
+
+			f.close();
+
+			if (buffersize != buffersize2) {
+				stream->Release();//先释放
+				return nullptr;
+			}
+			else {
+				return (fcyStream*)stream;
+			}
 		}
+	};
+	std::error_code ec;
+	if (std::filesystem::is_regular_file(wpath, ec)) {
+		return loadFile(wpath);
+	}
+	else {
+		std::string new_path;
+		for (auto const& search_path : m_Impl->m_search_path_list) {
+			new_path.clear();
+			new_path.append(search_path);
+			new_path.append(filepath);
+			wpath = Eyes2D::String::UTF8ToUTF16(new_path);
+			if (std::filesystem::is_regular_file(wpath, ec)) {
+				return loadFile(wpath);
+			}
+		}
+		return nullptr;
 	}
 	//*/
 }
@@ -518,4 +553,30 @@ fcyStream* FileManager::LoadFile(const char* filepath, const char* archive) {
 	else {
 		return nullptr;
 	}
+}
+
+void FileManager::AddSearchPath(const char* path)
+{
+	RemoveSearchPath(path);
+	m_Impl->m_search_path_list.emplace_back(path);
+}
+
+void FileManager::RemoveSearchPath(const char* path)
+{
+	for (auto it = m_Impl->m_search_path_list.begin(); it != m_Impl->m_search_path_list.end();)
+	{
+		if (*it == path)
+		{
+			it = m_Impl->m_search_path_list.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+}
+
+void FileManager::ClearSearchPath()
+{
+	m_Impl->m_search_path_list.clear();
 }

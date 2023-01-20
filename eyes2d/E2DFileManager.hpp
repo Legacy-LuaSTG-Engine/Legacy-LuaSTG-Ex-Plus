@@ -106,6 +106,12 @@ namespace Eyes2D {
 			//加载文件,包括从压缩包内查找
 			fcyStream* LoadFile(const char* filepath);
 			fcyStream* LoadFile(const char* filepath, const char* archive);
+			// 添加搜索路径
+			void AddSearchPath(const char* path);
+			// 移除搜索路径
+			void RemoveSearchPath(const char* path);
+			// 清空搜索路径
+			void ClearSearchPath();
 		};
 	}
 }
