@@ -97,7 +97,14 @@ GameObject* GameObjectPool::_ReleaseObject(GameObject* object) {
 	GameObject* ret = nullptr;
 	{
 		auto it = m_UpdateList.find(object);
-		ret = *std::next(it);
+		if (it != m_UpdateList.end())
+		{
+			it = std::next(it);
+			if (it != m_UpdateList.end())
+			{
+				ret = *it;
+			}
+		}
 	}
 	m_UpdateList.erase(object);
 	m_RenderList.erase(object);

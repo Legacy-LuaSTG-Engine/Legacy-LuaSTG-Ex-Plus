@@ -127,10 +127,11 @@ bool listFilesS(lua_State* L, const char* dir, const char* ext, int& index) {
 	size_t extendsize = extendpath.size();//拓展名长度
 	size_t pathsize = 0;//文件路径长度
 
-	if (filesystem::is_directory(searchdir)) {
+	std::error_code ec;
+	if (filesystem::is_directory(searchdir, ec)) {
 		for (auto& f : filesystem::directory_iterator(searchdir)) {
-			if (filesystem::is_directory(f.path()) || filesystem::is_regular_file(f.path())) {
-				string path = f.path().string();//文件路径
+			if (filesystem::is_directory(f.path(), ec) || filesystem::is_regular_file(f.path(), ec)) {
+				string path = Eyes2D::String::UTF16ToUTF8(f.path().wstring());//文件路径
 				pathsize = path.size();
 
 				//检查拓展名匹配
